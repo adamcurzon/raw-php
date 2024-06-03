@@ -12,5 +12,11 @@ define('ROUTES', [
             "controller" => "CarController",
             "function" => "create"
         ]
+    ],
+    '/car/{}' => [
+        "GET" => [
+            "controller" => "CarController",
+            "function" => "get"
+        ],
     ]
 ]);

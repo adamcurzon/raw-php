@@ -17,7 +17,25 @@ class CarController
 
     public function index(Request $request): Response
     {
-        return new Response(ResponseCode::OK, data: $this->carRepository->findAll());
+        return new Response(
+            ResponseCode::OK,
+            data: $this->carRepository->findAll()
+        );
+    }
+
+    public function get(Request $request): Response
+    {
+        $carId = $request->getUrlPart(0);
+        $car = $this->carRepository->findById($carId);
+
+        if ($car === null) {
+            return new Response(ResponseCode::NOT_FOUND, "Car {$carId} not found");
+        }
+
+        return new Response(
+            ResponseCode::OK,
+            data: $car
+        );
     }
 
     public function create(Request $request): Response

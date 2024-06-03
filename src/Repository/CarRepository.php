@@ -27,6 +27,17 @@ class CarRepository
         return $carsArr;
     }
 
+    public function findById(int $id): ?array
+    {
+        $car = $this->repository->findOneBy(['id' => $id]);
+
+        if (!$car) {
+            return null;
+        }
+
+        return $car->toArray();
+    }
+
     public function save(Car $car): void
     {
         $this->em->persist($car);
