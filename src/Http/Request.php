@@ -25,6 +25,15 @@ class Request
         }
     }
 
+    public function validateUrlParts(ValidatorContract $validator): void
+    {
+        $validator->validate($this->urlParts);
+
+        if (!$validator->isValid()) {
+            (new Response(ResponseCode::BAD_REQUEST, "Request not valid", ["errors" => $validator->getErrors()]))->send();
+        }
+    }
+
     public function get($key)
     {
         return $this->body[$key];

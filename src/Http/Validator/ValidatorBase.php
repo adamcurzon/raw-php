@@ -32,6 +32,10 @@ class ValidatorBase implements ValidatorContract
             if (in_array(ValidatorRulesEnum::EMAIL, $rules)) {
                 $this->{ValidatorRulesEnum::EMAIL->value}($body, $key);
             }
+
+            if (in_array(ValidatorRulesEnum::INTEGER, $rules)) {
+                $this->{ValidatorRulesEnum::INTEGER->value}($body, $key);
+            }
         }
     }
 
@@ -47,6 +51,14 @@ class ValidatorBase implements ValidatorContract
     {
         if (!preg_match('/^[a-zA-Z]+$/', $body[$key])) {
             $this->errors[$key][] = ValidatorRulesEnum::EMAIL->value;
+            $this->valid = false;
+        }
+    }
+
+    public function integer($body, $key): void
+    {
+        if (!ctype_digit($body[$key])) {
+            $this->errors[$key][] = ValidatorRulesEnum::INTEGER->value;
             $this->valid = false;
         }
     }

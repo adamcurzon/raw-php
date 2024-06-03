@@ -8,6 +8,7 @@ use App\Http\Response;
 use App\Enum\ResponseCode;
 use App\Repository\CarRepository;
 use App\Http\Validator\CreateCarValidator;
+use App\Http\Validator\GetCarValidator;
 use App\Http\Validator\UpdateCarValidator;
 
 class CarController
@@ -26,6 +27,8 @@ class CarController
 
     public function get(Request $request): Response
     {
+        $request->validateUrlParts(new GetCarValidator());
+
         $carId = $request->getUrlPart(0);
         $car = $this->carRepository->findById($carId);
 
