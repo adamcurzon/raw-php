@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+// bin/doctrine
+
+use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use Doctrine\ORM\Tools\Console\EntityManagerProvider\SingleManagerProvider;
+
+include_once "vendor/autoload.php";
+include_once "container.php";
+include_once "dependencies.php";
+
+ConsoleRunner::run(
+    new SingleManagerProvider($container->get("EntityManager"))
+);
