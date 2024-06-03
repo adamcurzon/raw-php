@@ -8,6 +8,7 @@ use App\Http\Response;
 use App\Enum\ResponseCode;
 use App\Repository\CarRepository;
 use App\Http\Validator\CreateCarValidator;
+use App\Http\Validator\UpdateCarValidator;
 
 class CarController
 {
@@ -47,5 +48,22 @@ class CarController
         $this->carRepository->save($car);
 
         return new Response(ResponseCode::CREATED, "Car created", $car->toArray());
+    }
+
+    public function update(Request $request): Response
+    {
+        $request->validateJson(new UpdateCarValidator());
+
+        $carId = $request->getUrlPart(0);
+        $car = $this->carRepository->findById($carId);
+
+        if ($car === null) {
+            return new Response(ResponseCode::NOT_FOUND, "Car {$carId} not found");
+        }
+
+        $car->setName($request->get("name"));
+        $this->carRepository->save($car);
+
+        return new Response(ResponseCode::ACCEPTED, "Car updated", $car->toArray());
     }
 }
