@@ -12,6 +12,9 @@ include_once "container.php";
 include_once "dependencies.php";
 include_once "routes.php";
 
+$request = new Request();
+$request->parseUrl();
+
 // Check the route
 if (!array_key_exists($_SERVER["REQUEST_URI"], ROUTES)) {
     (new Response(ResponseCode::NOT_FOUND, "Route not found"))->send();
@@ -25,7 +28,6 @@ if (!array_key_exists($_SERVER["REQUEST_METHOD"], ROUTES[$_SERVER["REQUEST_URI"]
 // Handle the method
 try {
     $route = ROUTES[$_SERVER["REQUEST_URI"]][$_SERVER["REQUEST_METHOD"]];
-    $request = new Request();
     $response = $container->get($route["controller"])->{$route["function"]}($request);
 
     $response->send();

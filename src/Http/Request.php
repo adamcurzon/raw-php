@@ -9,6 +9,8 @@ class Request
 {
     private mixed $body;
 
+    private array $urlParts;
+
     public function __construct()
     {
         $this->body = json_decode(file_get_contents('php://input'), true) ?? null;
@@ -26,5 +28,23 @@ class Request
     public function get($key)
     {
         return $this->body[$key];
+    }
+
+    public function parseUrl(): void
+    {
+        $this->urlParts = array_unique(explode('/', $_SERVER['REQUEST_URI']));
+
+        $_SERVER["REQUEST_URI"] = "/" . $this->urlParts[1];
+
+        $this->urlParts = array_slice($this->urlParts, 2);
+
+        for ($i = 0; $i < sizeOf($this->urlParts); $i++) {
+            $_SERVER["REQUEST_URI"] .= "/{}";
+        }
+    }
+
+    public function getUrlPart(int $pos)
+    {
+        return $this->urlParts[$pos] ?? null;
     }
 }
