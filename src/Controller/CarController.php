@@ -34,7 +34,7 @@ class CarController
 
         return new Response(
             ResponseCode::OK,
-            data: $car
+            data: $car->toArray()
         );
     }
 
