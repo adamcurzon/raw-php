@@ -11,9 +11,12 @@ class Request
 
     private array $urlParts;
 
+    private array|null $headers;
+
     public function __construct()
     {
         $this->body = json_decode(file_get_contents('php://input'), true) ?? null;
+        $this->headers = getallheaders() ?? null;
     }
 
     public function validateJson(ValidatorContract $validator): void
@@ -55,5 +58,10 @@ class Request
     public function getUrlPart(int $pos)
     {
         return $this->urlParts[$pos] ?? null;
+    }
+
+    public function getHeader(string $key): string
+    {
+        return $this->headers[$key];
     }
 }
