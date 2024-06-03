@@ -19,7 +19,7 @@ class Request
         $validator->validate($this->body);
 
         if (!$validator->isValid()) {
-            (new Response(ResponseCode::BAD_REQUEST, "Request not valid", $validator->getErrors()))->send();
+            (new Response(ResponseCode::BAD_REQUEST, "Request not valid", ["errors" => $validator->getErrors()]))->send();
         }
     }
 
