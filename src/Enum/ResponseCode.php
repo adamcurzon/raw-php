@@ -9,6 +9,7 @@ enum ResponseCode: int
     case ACCEPTED = 202;
 
     case BAD_REQUEST = 400;
+    case FORBIDDEN = 401;
     case NOT_FOUND = 404;
     case METHOD_NOT_ALLOWED = 405;
 

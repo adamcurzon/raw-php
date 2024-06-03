@@ -10,7 +10,8 @@ define('ROUTES', [
         ],
         "POST" => [
             "controller" => "CarController",
-            "function" => "create"
+            "function" => "create",
+            "middleware" => ["AuthMiddleware"]
         ]
     ],
     '/car/{}' => [
@@ -20,7 +21,8 @@ define('ROUTES', [
         ],
         "PUT" => [
             "controller" => "CarController",
-            "function" => "update"
+            "function" => "update",
+            "middleware" => ["AuthMiddleware"]
         ],
     ]
 ]);
